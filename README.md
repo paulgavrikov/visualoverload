@@ -12,7 +12,41 @@
 </p>
 
 
-Is basic image understanding really solved in state-of-the-art VLMs? We present VisualOverload, a slightly different visual question answering (VQA) benchmark comprising 2,720 question–answer pairs, with privately held ground-truth responses. Unlike prior VQA datasets that typically focus on near global image understanding, VisualOverload challenges models to perform simple, knowledge-free visual understanding and reasoning of details in densely populated (or, *overloaded*) scenes. Our dataset consists of high-resolution scans of public-domain paintings that are populated with multiple figures, actions, and unfolding subplots set against elaborately detailed backdrops. Questions were handcrafted to probe for a thorough understanding of the scene.
+Is basic image understanding really solved in state-of-the-art VLMs? We present VisualOverload, a slightly different visual question answering (VQA) benchmark comprising 2,720 question–answer pairs across 6 tasks (activity and attribute recognition, OCR, counting, reasoning, and scene classification), with privately held ground-truth responses. Unlike prior VQA datasets that typically focus on near global image understanding, VisualOverload challenges models to perform simple, knowledge-free visual understanding and reasoning of details in densely populated (or, *overloaded*) scenes. Our dataset consists of high-resolution scans of public-domain paintings that are populated with multiple figures, actions, and unfolding subplots set against elaborately detailed backdrops. Questions were handcrafted to probe for a thorough understanding of the scene.
+
+
+#### Examples
+
+<table align="left">
+  <tr>
+    <td>Image:</td>
+    <td><img src="./assets/1.jpg" width="400"></td>
+    <td><img src="./assets/2.jpg" width="400"></td>
+    <td><img src="./assets/3.jpg" width="400"></td>
+  </tr>
+  <tr align="left">
+    <td>Task:</td>
+    <td><b>Reasoning<b></td>
+    <td><b>OCR<b></td>
+    <td><b>Counting<b></td>
+  </tr>
+  <tr align="left">
+    <td>Question:</td>
+    <td>Depending on the shadow of the people, what is the most likely position of the sun?</td>
+    <td>What is the ninth word of the caption below the image?</td>
+    <td>How many live animals can be seen?</td>
+  </tr>
+  <tr align="left">
+    <td>Options:</td>
+    <td>A. behind the right building,
+      B. behind the left building,
+      C. its night time,
+      D. behind the middle tower</td>
+    <td>(freeform)</td>
+    <td>(freeform)</td>
+  </tr>
+</table>
+
 
 ## 📂 Load the dataset
 
