@@ -77,6 +77,14 @@ All of our ground truth labels are private. The only way to score your submissio
 
 Your predictions should be a list of dictionaries, each containing an `question_id` field and a `response` field. For multiple choice questions, the `response` field should contain the predicted answer choice. For open-ended questions, the `response` field should contain the option letter (A-D). We will apply simple heuristics to clean the responses, but please ensure they are as accurate as possible.
 
+Example: 
+```
+[
+    {"question_id": "28deb79e", "response": "A"}, 
+    {"question_id": "73cbabd7", "response": "C"}, 
+    ...
+]
+```
 
 ## 🏆 Submit to the leaderboard
 We welcome all submissions for model *or* method (including prompting-based) to our dataset. Please create an issue following the template and include your predictions as JSON. 
