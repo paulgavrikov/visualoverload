@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <!-- TODO: Replace with your paper title and author names -->
+  <meta name="title"
+    content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes - Paul Gavrikov, Wei Lin, M. Jehanzeb Mirza, Soumya Jahagirdar, Muhammad Huzaifa, Sivan Doveh, Serena Yeung-Levy, James Glass, Hilde Kuehne">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description" content="The paper introduces VisualOverload, a new visual question answering (VQA) benchmark designed to test vision-language models (VLMs) on densely populated, detail-rich scenes using public-domain paintings. Unlike existing benchmarks that emphasize global image understanding, VisualOverload focuses on fine-grained, knowledge-free tasks across six categories. Testing 37 models, the authors find that performance drops sharply in complex cases, with the best model reaching only 19.6% accuracy on the hardest split and 69.5% overall. Error analysis highlights weaknesses in counting, OCR, and logical reasoning. The results suggest current VLMs are overestimated by standard benchmarks, and VisualOverload provides a resource to drive progress on detailed scene understanding.">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <meta name="keywords"
+    content="visual question answering, dense scenes, dataset, benchmark, machine learning, computer vision, AI">
+  <!-- TODO: List all authors -->
+  <meta name="author"
+    content="Paul Gavrikov, Wei Lin, M. Jehanzeb Mirza, Soumya Jahagirdar, Muhammad Huzaifa, Sivan Doveh, Serena Yeung-Levy, James Glass, Hilde Kuehne">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="VisualOverload">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title" content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description" content="The paper introduces VisualOverload, a new visual question answering (VQA) benchmark designed to test vision-language models (VLMs) on densely populated, detail-rich scenes using public-domain paintings. Unlike existing benchmarks that emphasize global image understanding, VisualOverload focuses on fine-grained, knowledge-free tasks across six categories. Testing 37 models, the authors find that performance drops sharply in complex cases, with the best model reaching only 19.6% accuracy on the hardest split and 69.5% overall. Error analysis highlights weaknesses in counting, OCR, and logical reasoning. The results suggest current VLMs are overestimated by standard benchmarks, and VisualOverload provides a resource to drive progress on detailed scene understanding.">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://paulgavrikov.github.io/visualoverload">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <!-- <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630"> -->
+  <meta property="og:image:alt" content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes">
+  <!-- <meta property="article:published_time" content="2024-01-01T00:00:00.000Z"> -->
+  <meta property="article:author" content="Paul Gavrikov">
+  <meta property="article:section" content="Research">
+  <!-- <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2"> -->
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <meta name="twitter:site" content="@paulgavrikov">
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <meta name="twitter:creator" content="@paulgavrikov">
+  <!-- TODO: Same as paper title above -->
+  <meta name="twitter:title" content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes">
+  <!-- TODO: Same as description above -->
+  <meta name="twitter:description" content="The paper introduces VisualOverload, a new visual question answering (VQA) benchmark designed to test vision-language models (VLMs) on densely populated, detail-rich scenes using public-domain paintings. Unlike existing benchmarks that emphasize global image understanding, VisualOverload focuses on fine-grained, knowledge-free tasks across six categories. Testing 37 models, the authors find that performance drops sharply in complex cases, with the best model reaching only 19.6% accuracy on the hardest split and 69.5% overall. Error analysis highlights weaknesses in counting, OCR, and logical reasoning. The results suggest current VLMs are overestimated by standard benchmarks, and VisualOverload provides a resource to drive progress on detailed scene understanding.">
+  <!-- TODO: Same as social preview image above -->
+  <!-- <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png"> -->
+  <meta name="twitter:image:alt" content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes">
+  <meta name="citation_author" content="Gavrikov, Paul">
+  <meta name="citation_author" content="Lin, Wei">
+  <meta name="citation_author" content="Mirza, M. Jehanzeb">
+  <meta name="citation_author" content="Jahagirdar, Soumya">
+  <meta name="citation_author" content="Huzaifa, Muhammad">
+  <meta name="citation_author" content="Doveh, Sivan">
+  <meta name="citation_author" content="Yeung-Levy, Serena">
+  <meta name="citation_author" content="Glass, James">
+  <meta name="citation_author" content="Kuehne, Hilde">
+  <!-- <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf"> -->
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.datatables.net">
+
+
+  <title>VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes - Paul Gavrikov, Wei Lin, M.
+    Jehanzeb Mirza, Soumya Jahagirdar, Muhammad Huzaifa, Sivan Doveh, Serena Yeung-Levy, James Glass, Hilde Kuehne |
+    Academic Research</title>
+
+  <!-- Favicon and App Icons -->
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico"> -->
+
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+
+
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css">
+  </noscript>
+
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- DataTable Initialization -->
+  <script defer>
+    $(document).ready(function() {
+      let table = new DataTable('#leaderboard-table', {
+          order: [[11, 'desc']],
+          columnDefs: [
+            { targets: [1, 7, 10], className: 'border-col' } // add class to col 2 & 4
+          ]
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <!-- TODO: Replace with your paper title -->
+              <h1 class="title is-1 publication-title"><img src="static/images/visualoverload_text_logo.svg" style="height: 2.5rem;" />: Visual Understanding of VLMs in Really Dense
+                Scenes</h1>
+              <div class="is-size-5 publication-authors">
+                <!-- TODO: Replace with your paper authors and their personal links -->
+                <span class="author-block">
+                  <a href="https://paulgavrikov.github.io/" target="_blank">Paul Gavrikov</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://wlin-at.github.io/" target="_blank">Wei Lin</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://jmiemirza.github.io/" target="_blank">M. Jehanzeb Mirza</a><sup>3</sup>,</span>
+                <span class="author-block">
+                  <a href="https://soumyasj.github.io/" target="_blank">Soumya Jahagirdar</a><sup>4</sup>,</span>
+                <span class="author-block">
+                  <a href="https://muhammad-huzaifaa.github.io/" target="_blank">Muhammad
+                    Huzaifa</a><sup>4</sup>,</span>
+                <span class="author-block">
+                  <a href="https://sivandoveh.github.io/" target="_blank">Sivan Doveh</a><sup>5</sup>,</span>
+                <span class="author-block">
+                  <a href="https://ai.stanford.edu/~syyeung/" target="_blank">Serena Yeung-Levy</a><sup>5</sup>,</span>
+                <span class="author-block">
+                  <a href="https://www.csail.mit.edu/person/jim-glass" target="_blank">James
+                    Glass</a><sup>3</sup>,</span>
+                <span class="author-block">
+                  <a href="https://hildekuehne.github.io/" target="_blank">Hilde Kuehne</a><sup>4,6</sup></span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <!-- TODO: Replace with your institution and conference/journal info -->
+                <span class="author-block"><sup>1</sup> Independent Researcher <sup>2</sup> JKU Linz <sup>3</sup> MIT
+                  CSAIL <sup>4</sup> Tübingen AI Center <sup>5</sup> Standford <sup>6</sup> MIT-IBM Watson AI
+                  Lab<br>Preprint, 2025</span>
+                <!-- TODO: Remove this line if no equal contribution -->
+                <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/paulgavrikov/visualoverload" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        🤗
+                      </span>
+                      <span>Dataset</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        🚀
+                      </span>
+                      <span>Evaluation Server</span>
+                    </a>
+                  </span>
+
+
+                  <!-- TODO: Update with your arXiv paper ID -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <!-- TODO: Add your supplementary material PDF or remove this section -->
+                  <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- TODO: Replace with your GitHub repository URL -->
+                  <span class="link-block">
+                    <a href="https://github.com/paulgavrikov/visualoverload" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+
+                  <!-- TODO: Update with your arXiv paper ID -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/logo.jpg"/>
+    </div>
+  </div>
+</section> -->
+
+    <!-- Paper abstract -->
+    <section class="section hero is-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <h2 class="title">Abstract</h2>
+            <div class="content has-text-justified">
+              <!-- TODO: Replace with your paper abstract -->
+              <p>
+                Is basic visual understanding really solved in state-of-the-art VLMs? We present VisualOverload, a
+                slightly different visual question answering (VQA) benchmark comprising 2,720 question–answer pairs,
+                with privately held ground-truth responses. Unlike prior VQA datasets that typically focus on near
+                global image understanding, VisualOverload challenges models to perform simple, knowledge-free vision
+                tasks in densely populated (or, overloaded) scenes. Our dataset consists of high-resolution scans of
+                public-domain paintings that are populated with multiple figures, actions, and unfolding subplots set
+                against elaborately detailed backdrops. We manually annotated these images with questions across six
+                task categories to probe for a thorough understanding of the scene. We hypothesize that current
+                benchmarks overestimate the performance of VLMs, and encoding and reasoning over details is still a
+                challenging task for them, especially if they are confronted with densely populated scenes. Indeed, we
+                observe that even the best model (o3) out of 37 tested models only achieves 19.6% accuracy on our
+                hardest test split and overall 69.5% accuracy on all questions. Beyond a thorough evaluation, we
+                complement our benchmark with an error analysis that reveals multiple failure modes, including a lack of
+                counting skills, failure in OCR, and striking logical inconsistencies under complex tasks. Altogether,
+                VisualOverload exposes a critical gap in current vision models and offers a crucial resource for the
+                community to develop better models.
+              </p>
+              <ul style="list-style-type: '-> '">
+                <li>2,720 question-answer pairs</li>
+                <li>6 tasks and 3 levels of difficulty</li>
+                <li>fresh image data</li>
+                <li>all images are public domain</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
+
+    <!-- Leaderboard -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns is-centered">
+          <div class="column">
+          <h2 class="title">Leaderboard</h2>
+            You can benchmark your own model by submitting your predictions to our <a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit">evaluation server</a>. If you want your submission to appear on the public leaderboard, please follow the instructions to open a <a href="https://github.com/paulgavrikov/visualoverload/issues">GitHub issue</a>.
+            <table id="leaderboard-table" class="display">
+            <thead>
+              <tr style="text-align: right;">
+                <th>Model</th>
+                <th>Special Inference</th>
+                <th>Activity</th>
+                <th>Attributes</th>
+                <th>Counting</th>
+                <th>OCR</th>
+                <th>Reasoning</th>
+                <th>Scene</th>
+                <th>Easy</th>
+                <th>Medium</th>
+                <th>Hard</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>PaliGemma 2 3B</th>
+                <td>No</td>
+                <td>42.0</td>
+                <td>53.0</td>
+                <td>20.4</td>
+                <td>8.5</td>
+                <td>24.9</td>
+                <td>32.7</td>
+                <td>51.9</td>
+                <td>28.3</td>
+                <td>5.0</td>
+                <td>29.0</td>
+              </tr>
+              <tr>
+                <th>LLaVA 1.5 7B</th>
+                <td>No</td>
+                <td>35.3</td>
+                <td>43.6</td>
+                <td>13.2</td>
+                <td>3.4</td>
+                <td>39.5</td>
+                <td>43.2</td>
+                <td>69.7</td>
+                <td>24.6</td>
+                <td>1.9</td>
+                <td>30.8</td>
+              </tr>
+              <tr>
+                <th>Gemma 3n E2B</th>
+                <td>No</td>
+                <td>32.0</td>
+                <td>26.2</td>
+                <td>15.0</td>
+                <td>19.5</td>
+                <td>35.6</td>
+                <td>53.2</td>
+                <td>74.6</td>
+                <td>25.7</td>
+                <td>7.9</td>
+                <td>33.9</td>
+              </tr>
+              <tr>
+                <th>LLaVA-NeXT 7B</th>
+                <td>No</td>
+                <td>44.7</td>
+                <td>41.6</td>
+                <td>19.1</td>
+                <td>8.5</td>
+                <td>40.5</td>
+                <td>54.0</td>
+                <td>81.8</td>
+                <td>31.5</td>
+                <td>2.2</td>
+                <td>37.5</td>
+              </tr>
+              <tr>
+                <th>LFM2 VL 450M</th>
+                <td>No</td>
+                <td>35.3</td>
+                <td>47.0</td>
+                <td>22.9</td>
+                <td>20.3</td>
+                <td>27.8</td>
+                <td>59.5</td>
+                <td>83.1</td>
+                <td>32.4</td>
+                <td>8.6</td>
+                <td>39.7</td>
+              </tr>
+              <tr>
+                <th>DeepSeek VL2 Tiny</th>
+                <td>No</td>
+                <td>54.7</td>
+                <td>47.7</td>
+                <td>22.5</td>
+                <td>35.6</td>
+                <td>37.1</td>
+                <td>54.2</td>
+                <td>82.5</td>
+                <td>38.0</td>
+                <td>2.6</td>
+                <td>41.2</td>
+              </tr>
+              <tr>
+                <th>SmolVLM</th>
+                <td>No</td>
+                <td>42.7</td>
+                <td>41.6</td>
+                <td>17.2</td>
+                <td>28.0</td>
+                <td>32.2</td>
+                <td>67.3</td>
+                <td>83.5</td>
+                <td>38.8</td>
+                <td>3.1</td>
+                <td>42.0</td>
+              </tr>
+              <tr>
+                <th>Gemma 3n E4B</th>
+                <td>No</td>
+                <td>40.0</td>
+                <td>23.5</td>
+                <td>19.3</td>
+                <td>23.7</td>
+                <td>41.0</td>
+                <td>73.9</td>
+                <td>87.8</td>
+                <td>38.4</td>
+                <td>8.9</td>
+                <td>44.2</td>
+              </tr>
+              <tr>
+                <th>InternVL3 1B</th>
+                <td>No</td>
+                <td>48.0</td>
+                <td>57.0</td>
+                <td>27.2</td>
+                <td>25.4</td>
+                <td>35.1</td>
+                <td>77.5</td>
+                <td>94.9</td>
+                <td>48.9</td>
+                <td>5.0</td>
+                <td>50.6</td>
+              </tr>
+              <tr>
+                <th>LFM2 VL 1.6B</th>
+                <td>No</td>
+                <td>49.3</td>
+                <td>55.7</td>
+                <td>25.2</td>
+                <td>28.0</td>
+                <td>44.4</td>
+                <td>79.5</td>
+                <td>97.4</td>
+                <td>50.4</td>
+                <td>4.8</td>
+                <td>51.9</td>
+              </tr>
+              <tr>
+                <th>InternLM-XComposer2-4KHD</th>
+                <td>No</td>
+                <td>50.7</td>
+                <td>53.7</td>
+                <td>25.4</td>
+                <td>31.4</td>
+                <td>42.4</td>
+                <td>83.6</td>
+                <td>94.4</td>
+                <td>53.8</td>
+                <td>6.7</td>
+                <td>53.4</td>
+              </tr>
+              <tr>
+                <th>Qwen2.5-VL 3B</th>
+                <td>No</td>
+                <td>60.7</td>
+                <td>61.7</td>
+                <td>25.9</td>
+                <td>49.2</td>
+                <td>43.9</td>
+                <td>77.5</td>
+                <td>94.0</td>
+                <td>56.0</td>
+                <td>4.8</td>
+                <td>54.1</td>
+              </tr>
+              <tr>
+                <th>InternLM-XComposer2.5</th>
+                <td>No</td>
+                <td>48.0</td>
+                <td>51.7</td>
+                <td>22.7</td>
+                <td>35.6</td>
+                <td>45.9</td>
+                <td>87.3</td>
+                <td>95.9</td>
+                <td>53.7</td>
+                <td>9.1</td>
+                <td>54.3</td>
+              </tr>
+              <tr>
+                <th>InternVL3 2B</th>
+                <td>No</td>
+                <td>50.0</td>
+                <td>58.4</td>
+                <td>30.4</td>
+                <td>39.0</td>
+                <td>49.8</td>
+                <td>80.3</td>
+                <td>98.9</td>
+                <td>55.6</td>
+                <td>5.7</td>
+                <td>55.3</td>
+              </tr>
+              <tr>
+                <th>DeepSeek VL2</th>
+                <td>No</td>
+                <td>65.3</td>
+                <td>63.8</td>
+                <td>25.9</td>
+                <td>46.6</td>
+                <td>58.5</td>
+                <td>81.8</td>
+                <td>99.4</td>
+                <td>60.6</td>
+                <td>4.1</td>
+                <td>57.7</td>
+              </tr>
+              <tr>
+                <th>LLaVA-OneVision 7B</th>
+                <td>No</td>
+                <td>60.7</td>
+                <td>57.7</td>
+                <td>28.4</td>
+                <td>29.7</td>
+                <td>54.1</td>
+                <td>88.2</td>
+                <td>95.5</td>
+                <td>63.6</td>
+                <td>4.3</td>
+                <td>58.3</td>
+              </tr>
+              <tr>
+                <th>Qwen2.5-VL 7B</th>
+                <td>No</td>
+                <td>63.3</td>
+                <td>69.1</td>
+                <td>34.9</td>
+                <td>55.9</td>
+                <td>49.8</td>
+                <td>85.3</td>
+                <td>97.9</td>
+                <td>66.2</td>
+                <td>9.6</td>
+                <td>61.5</td>
+              </tr>
+              <tr>
+                <th>LLaVA 1.5 13B</th>
+                <td>No</td>
+                <td>41.3</td>
+                <td>39.6</td>
+                <td>13.8</td>
+                <td>3.4</td>
+                <td>42.9</td>
+                <td>71.6</td>
+                <td>94.0</td>
+                <td>34.0</td>
+                <td>2.6</td>
+                <td>42.0</td>
+              </tr>
+              <tr>
+                <th>LLaVA-NeXT 13B</th>
+                <td>No</td>
+                <td>44.0</td>
+                <td>43.6</td>
+                <td>17.0</td>
+                <td>6.8</td>
+                <td>41.5</td>
+                <td>75.8</td>
+                <td>97.4</td>
+                <td>38.1</td>
+                <td>2.9</td>
+                <td>45.1</td>
+              </tr>
+              <tr>
+                <th>VILA HD 4K</th>
+                <td>No</td>
+                <td>54.0</td>
+                <td>48.3</td>
+                <td>22.5</td>
+                <td>11.0</td>
+                <td>49.3</td>
+                <td>74.5</td>
+                <td>91.2</td>
+                <td>47.1</td>
+                <td>4.1</td>
+                <td>48.5</td>
+              </tr>
+              <tr>
+                <th>Gemma 3 12B</th>
+                <td>No</td>
+                <td>48.7</td>
+                <td>42.3</td>
+                <td>16.5</td>
+                <td>31.4</td>
+                <td>47.8</td>
+                <td>82.7</td>
+                <td>98.3</td>
+                <td>45.6</td>
+                <td>6.2</td>
+                <td>50.0</td>
+              </tr>
+              <tr>
+                <th>PaliGemma 2 10B</th>
+                <td>No</td>
+                <td>48.7</td>
+                <td>52.3</td>
+                <td>23.6</td>
+                <td>5.1</td>
+                <td>42.4</td>
+                <td>81.8</td>
+                <td>91.9</td>
+                <td>49.5</td>
+                <td>5.7</td>
+                <td>50.3</td>
+              </tr>
+              <tr>
+                <th>VILA HD 1.5K</th>
+                <td>No</td>
+                <td>54.0</td>
+                <td>57.7</td>
+                <td>25.9</td>
+                <td>21.2</td>
+                <td>52.2</td>
+                <td>79.4</td>
+                <td>94.2</td>
+                <td>54.3</td>
+                <td>4.1</td>
+                <td>53.1</td>
+              </tr>
+              <tr>
+                <th>InternVL3 8B</th>
+                <td>No</td>
+                <td>66.0</td>
+                <td>67.8</td>
+                <td>32.2</td>
+                <td>42.4</td>
+                <td>59.0</td>
+                <td>93.4</td>
+                <td>99.6</td>
+                <td>70.8</td>
+                <td>7.9</td>
+                <td>63.9</td>
+              </tr>
+              <tr>
+                <th>PaliGemma 2 28B</th>
+                <td>No</td>
+                <td>40.0</td>
+                <td>49.0</td>
+                <td>17.4</td>
+                <td>5.9</td>
+                <td>40.0</td>
+                <td>66.1</td>
+                <td>81.2</td>
+                <td>37.7</td>
+                <td>6.0</td>
+                <td>41.5</td>
+              </tr>
+              <tr>
+                <th>Gemma 3 27B</th>
+                <td>No</td>
+                <td>51.3</td>
+                <td>46.3</td>
+                <td>18.1</td>
+                <td>40.7</td>
+                <td>50.7</td>
+                <td>86.3</td>
+                <td>98.5</td>
+                <td>50.6</td>
+                <td>8.9</td>
+                <td>53.2</td>
+              </tr>
+              <tr>
+                <th>Llama 4 Scout</th>
+                <td>No</td>
+                <td>58.7</td>
+                <td>65.8</td>
+                <td>31.1</td>
+                <td>37.3</td>
+                <td>62.0</td>
+                <td>78.8</td>
+                <td>95.7</td>
+                <td>57.9</td>
+                <td>13.6</td>
+                <td>57.5</td>
+              </tr>
+              <tr>
+                <th>InternVL3 14B</th>
+                <td>No</td>
+                <td>66.7</td>
+                <td>69.1</td>
+                <td>30.6</td>
+                <td>41.5</td>
+                <td>57.1</td>
+                <td>91.1</td>
+                <td>98.5</td>
+                <td>69.7</td>
+                <td>5.3</td>
+                <td>62.5</td>
+              </tr>
+              <tr>
+                <th>LLaVA-OneVision 72B</th>
+                <td>No</td>
+                <td>66.0</td>
+                <td>69.8</td>
+                <td>30.9</td>
+                <td>39.0</td>
+                <td>57.1</td>
+                <td>91.8</td>
+                <td>97.6</td>
+                <td>71.0</td>
+                <td>4.1</td>
+                <td>62.7</td>
+              </tr>
+              <tr>
+                <th>Qwen2.5-VL 32B</th>
+                <td>No</td>
+                <td>60.0</td>
+                <td>70.5</td>
+                <td>30.8</td>
+                <td>61.0</td>
+                <td>61.5</td>
+                <td>90.3</td>
+                <td>98.5</td>
+                <td>68.7</td>
+                <td>12.4</td>
+                <td>63.6</td>
+              </tr>
+              <tr>
+                <th>Qwen2.5-VL 72B</th>
+                <td>No</td>
+                <td>67.3</td>
+                <td>74.5</td>
+                <td>35.1</td>
+                <td>72.9</td>
+                <td>53.2</td>
+                <td>90.5</td>
+                <td>97.6</td>
+                <td>72.6</td>
+                <td>13.4</td>
+                <td>65.7</td>
+              </tr>
+              <tr>
+                <th>InternVL3 78B</th>
+                <td>No</td>
+                <td>78.0</td>
+                <td>80.5</td>
+                <td>34.7</td>
+                <td>31.4</td>
+                <td>65.4</td>
+                <td>93.7</td>
+                <td>97.6</td>
+                <td>76.9</td>
+                <td>8.1</td>
+                <td>66.8</td>
+              </tr>
+              <tr>
+                <th>InternVL3 38B</th>
+                <td>No</td>
+                <td>76.7</td>
+                <td>78.5</td>
+                <td>35.4</td>
+                <td>45.8</td>
+                <td>69.8</td>
+                <td>92.2</td>
+                <td>98.3</td>
+                <td>78.6</td>
+                <td>7.2</td>
+                <td>67.6</td>
+              </tr>
+              <tr>
+                <th>Horizon Alpha</th>
+                <td>No</td>
+                <td>57.3</td>
+                <td>74.5</td>
+                <td>35.6</td>
+                <td>48.3</td>
+                <td>63.9</td>
+                <td>93.2</td>
+                <td>99.4</td>
+                <td>72.9</td>
+                <td>10.8</td>
+                <td>65.7</td>
+              </tr>
+              <tr>
+                <th>Gemini 2.0 Flash</th>
+                <td>No</td>
+                <td>76.0</td>
+                <td>71.1</td>
+                <td>41.7</td>
+                <td>57.6</td>
+                <td>56.6</td>
+                <td>92.1</td>
+                <td>99.1</td>
+                <td>74.0</td>
+                <td>19.1</td>
+                <td>68.1</td>
+              </tr>
+              <tr>
+                <th>o4 mini</th>
+                <td>No</td>
+                <td>70.0</td>
+                <td>76.5</td>
+                <td>38.3</td>
+                <td>62.7</td>
+                <td>67.8</td>
+                <td>93.7</td>
+                <td>98.1</td>
+                <td>77.4</td>
+                <td>17.2</td>
+                <td>69.1</td>
+              </tr>
+              <tr>
+                <th>o3</th>
+                <td>No</td>
+                <td>74.0</td>
+                <td>69.8</td>
+                <td>36.7</td>
+                <td>61.0</td>
+                <td>75.1</td>
+                <td>94.7</td>
+                <td>99.4</td>
+                <td>76.4</td>
+                <td>19.6</td>
+                <td>69.5</td>
+              </tr>
+            </tbody>
+          </table>
+          </div> 
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--End Leaderboard -->
+
+    <!-- Image carousel -->
+    <section class="hero is-light">
+      <div class="hero-body">
+        <div class="container">
+          <h2 class="title">Example Questions</h2>
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item">
+              <img src="static/images/1.jpg" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                <p><b>Depending on the shadow of the people, what is the most likely position of the sun?</b></p>
+                <p>Options: A. behind the right building, B. behind the left building, C. its night time, D. behind the
+                  middle tower</p>
+                <p><em>Task: Reasoning</em></p>
+              </h2>
+            </div>
+            <div class="item">
+              <img src="static/images/2.jpg" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                <p><b>What is the ninth word of the caption below the image?</b></p>
+                <p>(freeform)</p>
+                <p><em>Task: OCR</em></p>
+              </h2>
+            </div>
+            <div class="item">
+              <img src="static/images/3.jpg" loading="lazy" />
+              <h2 class="subtitle has-text-centered">
+                <p><b>How many live animals can be seen?</b></p>
+                <p>(freeform)</p>
+                <p><em>Task: Counting</em></p>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+    <!-- End image carousel -->
+
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-header">
+          <h2 class="title">BibTeX</h2>
+          <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+            <i class="fas fa-copy"></i>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre id="bibtex-code"><code>Coming soon...</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
+
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+
+              <p>
+                This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                  href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                You are free to borrow the source code of this website, we just ask that you link back to this page in
+                the footer. <br> This website is licensed under a <a rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                  Commons Attribution-ShareAlike 4.0 International License</a>.
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+</body>
+
+</html>
