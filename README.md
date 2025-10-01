@@ -5,7 +5,7 @@
 # VisualOverload
 
 <p align="center">
-[<a href="">📚 Paper (coming soon)</a>] 
+[<a href="http://arxiv.org/abs/2509.25339">📚 Paper</a>] 
 [<a href="https://huggingface.co/datasets/paulgavrikov/visualoverload">🤗 Dataset on HuggingFace</a>]
 [<a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit">🏆 Leaderboard</a>]
 [<a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit">🎯 Online Evaluator</a>]
@@ -96,5 +96,13 @@ Our dataset is licensed under CC BY-SA 4.0. All images are based on artwork that
 ## 📚 Citation
 
 ```latex
-Coming soon.
+@misc{gavrikov2025visualoverload,
+      title={VisualOverload: Probing Visual Understanding of VLMs in Really Dense Scenes}, 
+      author={Paul Gavrikov and Wei Lin and M. Jehanzeb Mirza and Soumya Jahagirdar and Muhammad Huzaifa and Sivan Doveh and Serena Yeung-Levy and James Glass and Hilde Kuehne},
+      year={2025},
+      eprint={2509.25339},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.25339}, 
+}
 ```
