@@ -1271,20 +1271,3 @@ class LFM2(InferenceBase):
         ).to(self.model.device)
         
         return hf_inference(inputs, self.model, self.processor, **inference_args)[0]
-
-
-if __name__ == "__main__":
-
-    import socket 
-    hostname = socket.gethostname()
-
-    if "cvai" in hostname:
-        device_map = "auto"
-        path = "/data1/paul/visualoverload/google_art_data_largest_resized/"
-    elif "galvani" in hostname:
-        device_map = "{'vision_tower': 0, 'multi_modal_projector': 1, 'language_model.model.embed_tokens': 1, 'language_model.model.layers.0': 1, 'language_model.model.layers.1': 1, 'language_model.model.layers.2': 1, 'language_model.model.layers.3': 1, 'language_model.model.layers.4': 1, 'language_model.model.layers.5': 1, 'language_model.model.layers.6': 1, 'language_model.model.layers.7': 1, 'language_model.model.layers.8': 1, 'language_model.model.layers.9': 1, 'language_model.model.layers.10': 1, 'language_model.model.layers.11': 1, 'language_model.model.layers.12': 2, 'language_model.model.layers.13': 2, 'language_model.model.layers.14': 2, 'language_model.model.layers.15': 2, 'language_model.model.layers.16': 2, 'language_model.model.layers.17': 2, 'language_model.model.layers.18': 2, 'language_model.model.layers.19': 3, 'language_model.model.layers.20': 3, 'language_model.model.layers.21': 3, 'language_model.model.layers.22': 3, 'language_model.model.layers.23': 3, 'language_model.model.layers.24': 3, 'language_model.model.layers.25': 3, 'language_model.model.layers.26': 3, 'language_model.model.norm': 1, 'language_model.lm_head': 3}"
-        path = "/mnt/lustre/work/kuehne/kqr471/google_art_data_largest_resized/"
-    
-    model = load_model("Kimi-VL-A3B-Thinking-2506", device_map)
-    response = model.forward("Describe the scene.", os.path.join(path, "charity-charitas-from-the-virtues-philips-galle-pieter-bruegel-the-elder-hieronymus-cock__OAEfKdNpVRlr_Q.jpg"))
-    print(response)
