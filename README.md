@@ -2,7 +2,7 @@
 <img src="./assets/logo.jpg" width="400"> <br>
 </p>
 
-# VisualOverload
+# VisualOverload (CVPR 2026)
 
 <p align="center">
 [<a href="http://arxiv.org/abs/2509.25339">📚 Paper</a>] 
