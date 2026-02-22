@@ -97,8 +97,8 @@ Our dataset is licensed under CC BY-SA 4.0. All images are based on artwork that
 
 ```latex
 @InProceedings{Gavrikov_2026_visualoverload,
-      author={Paul Gavrikov and Wei Lin and M. Jehanzeb Mirza and Soumya Jahagirdar and Muhammad Huzaifa and Sivan Doveh and Serena Yeung-Levy and James Glass and Hilde Kuehne},
-      title={{VisualOverload}: Probing Visual Understanding of VLMs in Really Dense Scenes}, 
+      author = {Paul Gavrikov and Wei Lin and M. Jehanzeb Mirza and Soumya Jahagirdar and Muhammad Huzaifa and Sivan Doveh and Serena Yeung-Levy and James Glass and Hilde Kuehne},
+      title = {{VisualOverload}: Probing Visual Understanding of VLMs in Really Dense Scenes}, 
       booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
       month = {June},
       year = {2026}
