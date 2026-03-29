@@ -209,3 +209,4 @@ __marimo__/
 image.jpeg
 my_prediction.json
 .DS_Store
+wandb
