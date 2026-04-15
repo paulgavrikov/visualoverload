@@ -88,6 +88,9 @@ Example:
 ## 🏆 Submit to the leaderboard
 We welcome all submissions for model *or* method (including prompting-based) to our dataset. Please create an issue following the template and include your predictions as JSON. 
 
+## 📸 Image Dataset
+
+Do you want to use the images for your own research? Great! You can find them on [HuggingFace](https://huggingface.co/datasets/paulgavrikov/visualoverload/tree/main/images). Please, also find the image complexity estimates [here](https://huggingface.co/datasets/paulgavrikov/visualoverload/blob/main/complexity.json) (see appendix for method details and find the corresponding code in the `complexity` folder).
 
 ## 📝 License
 
