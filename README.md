@@ -68,6 +68,20 @@ Each sample contains the following fields
 - `category`:  Meta-data about the question task. One of `activity`, `attributes`, `counting`, `ocr`, `reasoning`, or `scene`.
 - `default_prompt`: You can use this prompt to stay compliant with our results. It is a simple combination of the question and answers, with some additional output format constraints. This should work well for most models.
 
+### 🔦 Load with FiftyOne
+
+VisualOverload is also available in [FiftyOne](https://github.com/voxel51/fiftyone), an open-source tool for visualizing, exploring, and curating visual datasets. You can load it directly from the Hugging Face Hub and inspect every painting and question interactively in the FiftyOne App:
+
+```python
+import fiftyone as fo
+from fiftyone.utils.huggingface import load_from_hub
+
+dataset = load_from_hub("Voxel51/VisualOverload")
+session = fo.launch_app(dataset)
+```
+
+See the [FiftyOne dataset documentation](https://docs.voxel51.com/dataset_zoo/datasets_hf/visualoverload.html) for the full field/tag schema and usage details.
+
 ## 🎯 Evaluate your model
 
 Please see eval.py for an example evaluation script that generates a correct submission JSON.
