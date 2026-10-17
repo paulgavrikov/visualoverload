@@ -7,6 +7,7 @@
 <p align="center">
 [<a href="http://arxiv.org/abs/2509.25339">📚 Paper</a>] 
 [<a href="https://huggingface.co/datasets/paulgavrikov/visualoverload">🤗 Dataset on HuggingFace</a>]
+[<a href="https://modelscope.cn/datasets/evalscope/visualoverload/">📦 Dataset on ModelScope</a>]
 [<a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit">🏆 Leaderboard</a>]
 [<a href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit">🎯 Online Evaluator</a>]
 </p>
