@@ -73,6 +73,48 @@ Each sample contains the following fields
 
 Please see eval.py for an example evaluation script that generates a correct submission JSON.
 
+**eval.py** (models registered in `models.py`):
+
+```bash
+python eval.py --model Qwen2.5-VL-7B-Instruct
+```
+
+The submission is written to `my_prediction.json`. To evaluate a new model, subclass `InferenceBase` in `models.py`, decorate it with `@register_model("<name>")`, and implement `forward(prompt, image_path)` so it returns `{"response": ...}`.
+
+Alternatively, VisualOverload is integrated into [EvalScope](https://github.com/modelscope/evalscope) and [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). Both frameworks run inference with the official `default_prompt` and export a `visualoverload_submission.json` that you can upload to the evaluation server (see below). The integration is not yet part of a PyPI release, so install either framework from GitHub.
+
+**EvalScope** (any OpenAI-compatible API, e.g., a model served with vLLM):
+
+```bash
+pip install "git+https://github.com/modelscope/evalscope.git"
+
+evalscope eval \
+    --model Qwen/Qwen2.5-VL-7B-Instruct \
+    --eval-type openai_api \
+    --api-url http://127.0.0.1:8000/v1 \
+    --api-key EMPTY \
+    --datasets visualoverload
+```
+
+The submission is written to `outputs/<timestamp>/reports/<model>/visualoverload_submission.json`.
+
+**lmms-eval** (local HuggingFace models):
+
+```bash
+pip install "git+https://github.com/EvolvingLMMs-Lab/lmms-eval.git"
+
+python -m lmms_eval \
+    --model qwen2_5_vl \
+    --model_args pretrained=Qwen/Qwen2.5-VL-7B-Instruct \
+    --tasks visualoverload \
+    --batch_size 1 \
+    --output_path ./results
+```
+
+The submission is written to `results/submissions/visualoverload_submission.json`.
+
+Neither framework computes a local score, since the ground truth is private. Runs with `--limit` produce partial submissions that are only useful for testing.
+
 All of our ground truth labels are private. The only way to score your submission is to use the [evaluation server](https://huggingface.co/spaces/paulgavrikov/visualoverload-submit). You will need to sign in with a HuggingFace account.  
 
 Your predictions should be a list of dictionaries, each containing an `question_id` field and a `response` field. For multiple choice questions, the `response` field should contain the predicted answer choice. For open-ended questions, the `response` field should contain the option letter (A-D). We will apply simple heuristics to clean the responses, but please ensure they are as accurate as possible.

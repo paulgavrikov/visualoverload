@@ -352,6 +352,52 @@
     </section>
     <!-- End paper abstract -->
 
+    <!-- Inference frameworks -->
+    <section class="section" id="frameworks">
+      <div class="container is-max-desktop content">
+        <h2 class="title">Run Inference</h2>
+        <p>
+          Our <a href="https://github.com/paulgavrikov/visualoverload/blob/main/eval.py"
+            target="_blank"><code>eval.py</code></a> runs any model registered in <a
+            href="https://github.com/paulgavrikov/visualoverload/blob/main/models.py"
+            target="_blank"><code>models.py</code></a> and writes a submission file:
+        </p>
+        <pre><code>git clone https://github.com/paulgavrikov/visualoverload.git
+cd visualoverload
+python eval.py --model Qwen2.5-VL-7B-Instruct
+# -> my_prediction.json</code></pre>
+        <p>
+          VisualOverload is also integrated into <a href="https://github.com/modelscope/evalscope"
+            target="_blank">EvalScope</a> and <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval"
+            target="_blank">lmms-eval</a>. Both use the default prompts and export a
+          <code>visualoverload_submission.json</code> that you can upload to the <a
+            href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit" target="_blank">evaluation
+            server</a>.
+        </p>
+        <p><strong>EvalScope</strong> (any OpenAI-compatible API, e.g., a model served with vLLM):</p>
+        <pre><code>pip install "git+https://github.com/modelscope/evalscope.git"
+
+evalscope eval \
+    --model Qwen/Qwen2.5-VL-7B-Instruct \
+    --eval-type openai_api \
+    --api-url http://127.0.0.1:8000/v1 \
+    --api-key EMPTY \
+    --datasets visualoverload
+# -> outputs/&lt;timestamp&gt;/reports/&lt;model&gt;/visualoverload_submission.json</code></pre>
+        <p><strong>lmms-eval</strong> (local HuggingFace models):</p>
+        <pre><code>pip install "git+https://github.com/EvolvingLMMs-Lab/lmms-eval.git"
+
+python -m lmms_eval \
+    --model qwen2_5_vl \
+    --model_args pretrained=Qwen/Qwen2.5-VL-7B-Instruct \
+    --tasks visualoverload \
+    --batch_size 1 \
+    --output_path ./results
+# -> results/submissions/visualoverload_submission.json</code></pre>
+      </div>
+    </section>
+    <!-- End inference frameworks -->
+
     <!-- Leaderboard -->
     <section class="hero is-small">
       <div class="hero-body">
