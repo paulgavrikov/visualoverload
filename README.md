@@ -81,7 +81,7 @@ python eval.py --model Qwen2.5-VL-7B-Instruct
 
 The submission is written to `my_prediction.json`. To evaluate a new model, subclass `InferenceBase` in `models.py`, decorate it with `@register_model("<name>")`, and implement `forward(prompt, image_path)` so it returns `{"response": ...}`.
 
-Alternatively, VisualOverload is integrated into [EvalScope](https://github.com/modelscope/evalscope) and [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). Both frameworks run inference with the official `default_prompt` and export a `visualoverload_submission.json` that you can upload to the evaluation server (see below). The integration is not yet part of a PyPI release, so install either framework from GitHub.
+Alternatively, VisualOverload is integrated into [EvalScope](https://github.com/modelscope/evalscope), [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval), and [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). All three frameworks run inference with the official `default_prompt` and export a submission JSON that you can upload to the evaluation server (see below). The integration is not yet part of a PyPI release, so install each framework from GitHub.
 
 **EvalScope** (any OpenAI-compatible API, e.g., a model served with vLLM):
 
@@ -113,7 +113,22 @@ python -m lmms_eval \
 
 The submission is written to `results/submissions/visualoverload_submission.json`.
 
-Neither framework computes a local score, since the ground truth is private. Runs with `--limit` produce partial submissions that are only useful for testing.
+**VLMEvalKit** (local HuggingFace models or API models):
+
+```bash
+git clone https://github.com/open-compass/VLMEvalKit.git
+cd VLMEvalKit
+pip install -e .
+
+python run.py \
+    --data VisualOverload \
+    --model Qwen2.5-VL-7B-Instruct \
+    --mode all
+```
+
+The submission is written next to the prediction table as `outputs/<model>/<eval_id>/<model>_VisualOverload_submission.json`.
+
+None of these frameworks computes a local score, since the ground truth is private. Runs with `--limit` produce partial submissions that are only useful for testing.
 
 All of our ground truth labels are private. The only way to score your submission is to use the [evaluation server](https://huggingface.co/spaces/paulgavrikov/visualoverload-submit). You will need to sign in with a HuggingFace account.  
 

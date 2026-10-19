@@ -297,6 +297,8 @@
               </span> News</h2>
             <div class="content">
               <ul>
+                <li><strong>[2026/10/19]</strong> VisualOverload is now also available through
+                  <a href="https://github.com/open-compass/VLMEvalKit" target="_blank">VLMEvalKit</a>.</li>
                 <li><strong>[2026/10/17]</strong> VisualOverload is now also available through
                   <a href="https://github.com/modelscope/evalscope" target="_blank">EvalScope</a> and
                   <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval" target="_blank">lmms-eval</a>.</li>
@@ -368,9 +370,10 @@ python eval.py --model Qwen2.5-VL-7B-Instruct
 # -> my_prediction.json</code></pre>
         <p>
           VisualOverload is also integrated into <a href="https://github.com/modelscope/evalscope"
-            target="_blank">EvalScope</a> and <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval"
-            target="_blank">lmms-eval</a>. Both use the default prompts and export a
-          <code>visualoverload_submission.json</code> that you can upload to the <a
+            target="_blank">EvalScope</a>, <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval"
+            target="_blank">lmms-eval</a>, and <a href="https://github.com/open-compass/VLMEvalKit"
+            target="_blank">VLMEvalKit</a>. All three use the default prompts and export a
+          submission JSON that you can upload to the <a
             href="https://huggingface.co/spaces/paulgavrikov/visualoverload-submit" target="_blank">evaluation
             server</a>.
         </p>
@@ -394,6 +397,16 @@ python -m lmms_eval \
     --batch_size 1 \
     --output_path ./results
 # -> results/submissions/visualoverload_submission.json</code></pre>
+        <p><strong>VLMEvalKit</strong> (local HuggingFace models or API models):</p>
+        <pre><code>git clone https://github.com/open-compass/VLMEvalKit.git
+cd VLMEvalKit
+pip install -e .
+
+python run.py \
+    --data VisualOverload \
+    --model Qwen2.5-VL-7B-Instruct \
+    --mode all
+# -> outputs/&lt;model&gt;/&lt;eval_id&gt;/&lt;model&gt;_VisualOverload_submission.json</code></pre>
       </div>
     </section>
     <!-- End inference frameworks -->
